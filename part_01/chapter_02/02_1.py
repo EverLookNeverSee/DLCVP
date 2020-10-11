@@ -7,3 +7,6 @@ print(dir(models))
 # creating instances of two modes
 alexnet = models.AlexNet()
 resnet = models.resnet101(pretrained=True)
+
+# printing the architecture of resnet neural network
+print(resnet)
