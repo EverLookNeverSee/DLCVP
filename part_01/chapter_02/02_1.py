@@ -2,6 +2,7 @@
 from torchvision import models
 from torchvision import transforms
 from PIL import Image
+import torch
 
 # printing list of all models located in torchvision.models
 print(dir(models))
