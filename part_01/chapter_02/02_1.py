@@ -24,3 +24,8 @@ preprocess = transforms.Compose([
         std=[0.229, 0.224, 0.225]
     )
 ])
+
+# opening sample image
+img = Image.open("sample_dog.jpg")
+# passing image through preprocessing pipeline
+img_t = preprocess(img)
