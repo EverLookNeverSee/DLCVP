@@ -29,3 +29,13 @@ preprocess = transforms.Compose([
 img = Image.open("sample_dog.jpg")
 # passing image through preprocessing pipeline
 img_t = preprocess(img)
+
+# reshaping, cropping and normalizing the tensor
+batch_t = torch.unsqueeze(img_t, 0)
+
+# put in network in evaluate mode
+resnet.eval()
+
+# inference the model
+out = resnet(batch_t)
+print(out)
