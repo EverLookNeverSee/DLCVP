@@ -1,20 +1,23 @@
-# import relevant libraries
+import json
+from torchvision.datasets.utils import download_url
+
 from torchvision import models
 from torchvision import transforms
 from PIL import Image
 import torch
 
-# printing list of all models located in torchvision.models
-print(dir(models))
 
-# creating instances of two modes
+download_url("https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json", ".", "imagenet_class_index.json")
+
+
+with open("imagenet_class_index.json", "r") as h:
+    labels = json.load(h)
+
+
 alexnet = models.AlexNet()
 resnet = models.resnet101(pretrained=True)
 
-# printing the architecture of resnet neural network
-print(resnet)
 
-# preprocessing
 preprocess = transforms.Compose([
     transforms.Resize(256),
     transforms.CenterCrop(224),
@@ -25,26 +28,19 @@ preprocess = transforms.Compose([
     )
 ])
 
-# opening sample image
+
+download_url("https://farm1.static.flickr.com/152/434505223_8d1890e1e2.jpg", ".", "sample_dog.jpg")
 img = Image.open("sample_dog.jpg")
-# passing image through preprocessing pipeline
 img_t = preprocess(img)
 
-# reshaping, cropping and normalizing the tensor
 batch_t = torch.unsqueeze(img_t, 0)
 
-# put in network in evaluate mode
 resnet.eval()
 
-# inference the model
-out = resnet(batch_t)
-print(out)
-
-with open("imagenet_classes.txt") as f:
-    labels = [line.strip() for line in f.readline()]
-
-_, index = torch.max(out, 1)
+with torch.no_grad():
+    out = resnet(batch_t)
 
 
-percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
-labels[index[0]], percentage[index[0]].item()
+label_indices = out.argmax(dim=1)
+for p in label_indices:
+    print(labels[str(p.item())])
