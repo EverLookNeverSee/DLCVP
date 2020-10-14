@@ -39,3 +39,12 @@ resnet.eval()
 # inference the model
 out = resnet(batch_t)
 print(out)
+
+with open("imagenet_classes.txt") as f:
+    labels = [line.strip() for line in f.readline()]
+
+_, index = torch.max(out, 1)
+
+
+percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
+labels[index[0]], percentage[index[0]].item()
