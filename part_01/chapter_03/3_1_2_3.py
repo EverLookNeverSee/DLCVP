@@ -34,3 +34,58 @@ print(f"to float: {float(a[1])}")
 # assigning a new value to element of tensor
 a[2] = 2.0
 print(f"all elements of tensor: {a}")
+
+# -------------------------------------------------------------------
+
+# 3.2.3  the essence of tensors
+
+# creating appropriately sized array
+points = torch.zeros(6)
+
+# assigning values to it
+points[0] = 4.0
+points[1] = 1.0
+points[2] = 5.0
+points[3] = 3.0
+points[4] = 2.0
+points[5] = 1.0
+
+print(f"points: {points}")
+
+# passing python list to the constructor to the same effect
+points = torch.tensor([4.0, 1.0, 5.0, 3.0, 2.0, 1.0])
+print(f"points: {points}")
+
+
+# getting the coordinates of the first point
+print(f"coordinates: {float(points[0]),float(points[1])}")
+
+
+# 2D tensor
+points = torch.tensor([
+    [4.0, 1.0],
+    [5.0, 3.0],
+    [2.0, 1.0]
+])
+
+print(f"2d points: {points}")
+
+# tensor shape
+print(f"shape of tensor: {points.shape}")
+
+
+# using zeros and ones to initialize the tensor
+points = torch.zeros(3, 2)
+print(f"points: {points}")
+
+points = torch.tensor([
+    [4.0, 1.0],
+    [5.0, 3.0],
+    [2.0, 1.0]
+])
+
+print(f"2d tensor: {points}")
+print(f"points[0, 1]: {points[0, 1]}")
+print(f"y coordinates of zeroth point: {points[0]}")
+
+# -------------------------------------------------------------------
