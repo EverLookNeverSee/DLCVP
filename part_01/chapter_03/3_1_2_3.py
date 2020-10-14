@@ -89,3 +89,18 @@ print(f"points[0, 1]: {points[0, 1]}")
 print(f"y coordinates of zeroth point: {points[0]}")
 
 # -------------------------------------------------------------------
+
+# 3.3  indexing tensors
+
+# all rows after the first, implicitly all columns
+print(f"points[1:]: {points[1:]}")
+
+# all rows after the first, first column
+print(f"points[1:, :] : {points[1:, :]}")
+
+# all rows after the first, first column
+print(f"points[1:, 0] : {points[1:, 0]}")
+
+# adds a dimension of size 1, just like unsqueeze
+points = points[None]
+print(points)
