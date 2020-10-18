@@ -104,3 +104,32 @@ print(f"points[1:, 0] : {points[1:, 0]}")
 # adds a dimension of size 1, just like unsqueeze
 points = points[None]
 print(points)
+
+# -------------------------------------------------------------------
+
+# 3.4  Named tensors
+
+img_t = torch.randn(3, 5, 5)    # shape  [channels, rows, columns]
+weights = torch.tensor([0.2126, 0.7152, 0.0722])
+
+batch_t = torch.randn(2, 3, 5, 5)   # shape  [batch, channels, rows, columns]
+
+img_gray_naive = img_t.mean(-3)
+batch_gray_naive = batch_t.mean(-3)
+
+print(f"shape_1: {img_gray_naive.shape}, shape_2: {batch_gray_naive.shape}")
+
+
+unsqueezed_weights = weights.unsqueeze(-1).unsqueeze_(-1)
+img_weights = (img_t * unsqueezed_weights)
+batch_weights = (batch_t * unsqueezed_weights)
+img_gray_weighted = img_weights.sum(-3)
+batch_gray_weighted = batch_weights.sum(-3)
+
+print(f"{batch_weights.shape}, {batch_t.shape}, {unsqueezed_weights.shape}")
+
+
+img_gray_weighted_fancy = torch.einsum('...chw,c->...hw', img_t, weights)
+batch_gray_weighted_fancy = torch.einsum('...chw,c->...hw', batch_t, weights)
+print(batch_gray_weighted_fancy.shape)
+
